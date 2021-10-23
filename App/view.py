@@ -24,6 +24,7 @@ import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+from DISClib.ADT import orderedmap as om
 assert cf
 
 
@@ -39,8 +40,8 @@ def printMenu():
     print("1- Cargar información en el catálogo")
     print("2- ")
 
-catalog = None
-
+catalog = "UFOS-utf8-small.csv"
+cont=controller.init()
 """
 Menu principal
 """
@@ -49,7 +50,8 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
+        asd = controller.loadData(cont["dateIndex"],catalog)
+        print(lt.size(asd["root"]))
     elif int(inputs[0]) == 2:
         pass
 
