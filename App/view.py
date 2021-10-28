@@ -25,6 +25,7 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 from DISClib.ADT import orderedmap as om
+from DISClib.Algorithms.Trees import traversal as tv
 assert cf
 
 
@@ -56,8 +57,11 @@ while True:
         print( "Menor llave " + str(om.minKey(mapa)))
         print("Mayor llave " + str(om.maxKey(mapa)))
     elif int(inputs[0]) == 2:
-        pass
+        print("Hola")
+        print(controller.hola(cont["dateIndex"])) 
 
+        
+        
     else:
         sys.exit(0)
 sys.exit(0)

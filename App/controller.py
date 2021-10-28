@@ -51,7 +51,10 @@ def loadData(analyzer, crimesfile):
         model.addSight(analyzer, crime)
     return analyzer
 
-
+def hola(catalogo):
+    inicio=input("Introduce hora inicial en formato HH:MM: ")
+    final=input("Introduce hora final en formato HH:MM: ")
+    return model.hola(catalogo,inicio,final)
 # Funciones para la carga de datos
 
 # Funciones de ordenamiento
