@@ -30,7 +30,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.Algorithms.Trees import traversal as tv
 
 assert cf
@@ -78,6 +78,8 @@ def hola(catalogo,inicio,final):
     retorno=lt.newList("ARRAY_LIST")
     for i in lt.iterator(lista):
         hora = i["datetime"][11:-3]
+        #if hora=="00:00":
+            #hora="24:00"
         if inicio<=hora<=final:
             if mp.contains(mapa,hora)==False:
                 mp.put(mapa,hora,1)
@@ -89,9 +91,10 @@ def hola(catalogo,inicio,final):
             #if hora!= "00:00":
                # lt.addLast(retorno,i)
     for j in lt.iterator(mp.keySet(mapa)):
-        print(mp.get(mapa,j))
-
-def hola2(catalogo,inicio,final):
+        lt.addLast(retorno,mp.get(mapa,j))
+    ordenado=  ms.sort(retorno,ordenarFecha)
+    print(ordenado)
+def hola1(catalogo,inicio,final):
     lista=tv.postorder(catalogo)
     mapa=mp.newMap(150,
         maptype="CHAINING", loadfactor=1.5)
@@ -99,10 +102,10 @@ def hola2(catalogo,inicio,final):
     retorno=lt.newList("ARRAY_LIST")
     for i in lt.iterator(lista):
         hora = i["datetime"][11:-3]
-        if inicio<=hora<=final:
-            if hora=="23:00":
-                contador+=1
-    return contador
+        if hora=="00:00":
+            hora="24:00"
+            print(hora)
+    
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
@@ -116,5 +119,12 @@ def compareDates(date1, date2):
         return 1
     else:
         return -1
+
+def ordenarFecha(date1, date2):
+    
+    if (date1["value"] >= date2["value"]):
+        return 1
+    else:
+        return 0
 
 
