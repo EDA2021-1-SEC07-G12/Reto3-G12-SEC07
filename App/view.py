@@ -50,8 +50,11 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        asd = controller.loadData(cont["dateIndex"],catalog)
-        print(lt.size(asd["root"]))
+        mapa = controller.loadData(cont["dateIndex"],catalog)
+        print("El arbol tiene  " + str(om.size(mapa)) + " elementos ")
+        print("El arbol cargado tiene una altura de " + str(om.height(mapa)))
+        print( "Menor llave " + str(om.minKey(mapa)))
+        print("Mayor llave " + str(om.maxKey(mapa)))
     elif int(inputs[0]) == 2:
         pass
 
