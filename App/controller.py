@@ -47,8 +47,9 @@ def loadData(analyzer, crimesfile):
     UfosFile = cf.data_dir + crimesfile
     input_file = csv.DictReader(open(UfosFile, encoding="utf-8"),
                                 delimiter=",")
-    for crime in input_file:
-        model.addSight(analyzer, crime)
+    for sight in input_file:
+        model.addSight(analyzer, sight)
+        model.addCity(analyzer, sight)
     return analyzer
 
 def hola(catalogo):

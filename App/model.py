@@ -53,6 +53,7 @@ def newAnalyzer():
                 }
 
     analyzer['dateIndex'] = om.newMap(omaptype="BRT", comparefunction=compareDates)
+    analyzer["cityIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
     return analyzer
 
 
@@ -63,7 +64,17 @@ def addSight(mapa,sight):
     
     om.put(mapa,sight["datetime"],sight)
     nodos= om.size(mapa)
-    
+def addCity(mapa,sight):
+
+    if om.contains(mapa,sight["city"])==False:
+        lista=lt.newList("ARRAY_LIST")
+        lt.addLast(lista,sight)
+        om.put(mapa,sight["city"], lista)
+    else:
+        lista1=om.get(mapa,sight["city"])
+        lista1=lista1["value"]
+        lt.addLast(lista1,sight)
+        
    # print(sight["datetime"])
     
 # Funciones para creacion de datos
@@ -76,35 +87,27 @@ def hola(catalogo,inicio,final):
         maptype="CHAINING", loadfactor=1.5)
     contador=0
     retorno=lt.newList("ARRAY_LIST")
+    retorno1=lt.newList("ARRAY_LIST")
     for i in lt.iterator(lista):
         hora = i["datetime"][11:-3]
-        #if hora=="00:00":
-            #hora="24:00"
         if inicio<=hora<=final:
+            contador+= 1
             if mp.contains(mapa,hora)==False:
                 mp.put(mapa,hora,1)
             else:
                 value=mp.get(mapa,hora)["value"]
                 value+=1
                 mp.put(mapa,hora,value)
-    print(contador)
-            #if hora!= "00:00":
-               # lt.addLast(retorno,i)
+   
     for j in lt.iterator(mp.keySet(mapa)):
         lt.addLast(retorno,mp.get(mapa,j))
     ordenado=  ms.sort(retorno,ordenarFecha)
-    print(ordenado)
-def hola1(catalogo,inicio,final):
-    lista=tv.postorder(catalogo)
-    mapa=mp.newMap(150,
-        maptype="CHAINING", loadfactor=1.5)
-    contador=0
-    retorno=lt.newList("ARRAY_LIST")
-    for i in lt.iterator(lista):
-        hora = i["datetime"][11:-3]
-        if hora=="00:00":
-            hora="24:00"
-            print(hora)
+    ordenado=lt.subList(retorno,1,5)
+    lt.addLast(retorno1,contador)
+    lt.addLast(retorno1,lt.size(mp.keySet(mapa)))
+    lt.addLast(retorno1,ordenado)
+    return retorno1
+
     
 # Funciones utilizadas para comparar elementos dentro de una lista
 
@@ -122,7 +125,7 @@ def compareDates(date1, date2):
 
 def ordenarFecha(date1, date2):
     
-    if (date1["value"] >= date2["value"]):
+    if (date1["key"] >= date2["key"]):
         return 1
     else:
         return 0

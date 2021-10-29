@@ -41,7 +41,7 @@ def printMenu():
     print("1- Cargar información en el catálogo")
     print("2- ")
 
-catalog = "UFOS-utf8-small.csv"
+catalog = "UFOS-utf8-large.csv"
 cont=controller.init()
 """
 Menu principal
@@ -56,9 +56,18 @@ while True:
         print("El arbol cargado tiene una altura de " + str(om.height(mapa)))
         print( "Menor llave " + str(om.minKey(mapa)))
         print("Mayor llave " + str(om.maxKey(mapa)))
+    
     elif int(inputs[0]) == 2:
         print("Hola")
+        variable= controller.loadData(cont["cityIndex"],catalog)
+        variable1= om.get(variable,"las vegas")
+        print("Hay " + str(lt.size(variable1["value"])) + " avistamientos en la ciudad insertada")
+        print("Hay " + str(lt.size(om.keySet(variable))) + " Ciudades diferentes ")
+
+    elif int(inputs[0]) == 4:
+        print("Hola")
         print(controller.hola(cont["dateIndex"])) 
+        
 
         
         
