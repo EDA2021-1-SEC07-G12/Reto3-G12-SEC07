@@ -56,6 +56,11 @@ def hola(catalogo):
     inicio=input("Introduce hora inicial en formato HH:MM: ")
     final=input("Introduce hora final en formato HH:MM: ")
     return model.hola(catalogo,inicio,final)
+
+def requerimiento4(catalogo):
+    inicio=input("Introduce hora inicial en formato AA-MM-DD ")
+    final=input("Introduce hora final en formato AA-MM-DD ")
+    return model.requerimiento4(catalogo,inicio,final)
 # Funciones para la carga de datos
 
 # Funciones de ordenamiento

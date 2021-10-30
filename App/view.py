@@ -41,7 +41,7 @@ def printMenu():
     print("1- Cargar información en el catálogo")
     print("2- ")
 
-catalog = "UFOS-utf8-large.csv"
+catalog = "UFOS-utf8-small.csv"
 cont=controller.init()
 """
 Menu principal
@@ -63,6 +63,10 @@ while True:
         variable1= om.get(variable,"las vegas")
         print("Hay " + str(lt.size(variable1["value"])) + " avistamientos en la ciudad insertada")
         print("Hay " + str(lt.size(om.keySet(variable))) + " Ciudades diferentes ")
+
+    elif int(inputs[0]) == 3:
+        print("Hola")
+        print(controller.requerimiento4(cont["dateIndex"])) 
 
     elif int(inputs[0]) == 4:
         print("Hola")

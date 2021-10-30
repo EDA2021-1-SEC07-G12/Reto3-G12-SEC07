@@ -108,7 +108,9 @@ def hola(catalogo,inicio,final):
     lt.addLast(retorno1,ordenado)
     return retorno1
 
+def requerimiento4(catalogo,inicio,final):
     
+    return om.keys(catalogo,inicio,final)
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
