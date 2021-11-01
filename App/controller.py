@@ -60,7 +60,12 @@ def requerimiento4(catalogo):
     inicio=input("Introduce hora inicial en formato AA-MM-DD ")
     final=input("Introduce hora final en formato AA-MM-DD ")
     return model.requerimiento4(catalogo,inicio,final)
-
+def requerimiento5(catalogo):
+    loninit=float(input("Introduce longitud incial: "))
+    lonfinal=float(input("Introduce longitud final: "))
+    latinit=float(input("Introduce latitud incial: "))
+    latfinal=float(input("Introduce latitud incial: "))
+    return model.requerimiento5(catalogo,loninit,lonfinal,latinit,latfinal)
 # Funciones para la carga de datos
 
 # Funciones de ordenamiento

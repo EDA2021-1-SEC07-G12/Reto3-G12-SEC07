@@ -143,6 +143,20 @@ def hola(catalogo,inicio,final):
 def requerimiento4(catalogo,inicio,final):
     
     return om.keys(catalogo,inicio,final)
+
+def requerimiento5(catalogo,lonini,lonfinal,latini,latfinal):
+    catalogo=catalogo["longitudeIndex"]
+    lista=lt.newList("ARRAY_LIST")
+    longitudes=om.keys(catalogo,lonini,lonfinal)
+    for i in lt.iterator(longitudes):
+        variable= om.get(catalogo,i)
+        variable=variable["value"]
+        for j in lt.iterator(variable):
+            if latini<=float(j["latitude"])<=latfinal and j["state"]=="nm":
+                lt.addLast(lista,j)
+                
+    return lista
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
@@ -163,5 +177,3 @@ def ordenarFecha(date1, date2):
         return 1
     else:
         return 0
-
-

@@ -52,7 +52,11 @@ while True:
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
         controller.loadData(catalog)
-        print(om.valueSet(catalog["longitudeIndex"]))
+        
+        print("Datos correctamente cargados mi pana")
+        
+
+
         #print("El arbol tiene  " + str(om.size(mapa)) + " elementos ")
        # print("El arbol cargado tiene una altura de " + str(om.height(mapa)))
        # print( "Menor llave " + str(om.minKey(mapa)))
@@ -84,6 +88,10 @@ while True:
     elif int(inputs[0]) == 6:
         print("Hola")
         print(cont["cityIndex"])
+
+    elif int(inputs[0]) == 7:
+        print("Hola")
+        print(controller.requerimiento5(catalog))
         
     else:
         sys.exit(0)
