@@ -31,26 +31,25 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de libros
 
-def init():
-    """
-    Llama la funcion de inicializacion  del modelo.
-    """
-    # catalog es utilizado para interactuar con el modelo
-    analyzer = model.newAnalyzer()
-    return analyzer
+def initCatalog():
+    catalog= model.newAnalyzer()
 
+    return catalog
+# Funciones para la carga de datos
 
-def loadData(analyzer, crimesfile):
-    """
-    Carga los datos de los archivos CSV en el modelo
-    """
-    UfosFile = cf.data_dir + crimesfile
-    input_file = csv.DictReader(open(UfosFile, encoding="utf-8"),
-                                delimiter=",")
-    for sight in input_file:
-        model.addSight(analyzer, sight)
-        model.addCity(analyzer, sight)
-    return analyzer
+def loadData(catalog):
+    loadArtist(catalog)
+    #loadArtWork(catalog)
+    
+def loadArtist(catalog):
+    booksfile = cf.data_dir + 'UFOS-utf8-small.csv'
+    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
+    for Sight in input_file:
+        model.addSight(catalog, Sight)
+        model.addCity(catalog, Sight)
+        model.addSeconds(catalog, Sight)
+        model.addLongitude(catalog, Sight)
+   
 
 def hola(catalogo):
     inicio=input("Introduce hora inicial en formato HH:MM: ")
@@ -61,6 +60,7 @@ def requerimiento4(catalogo):
     inicio=input("Introduce hora inicial en formato AA-MM-DD ")
     final=input("Introduce hora final en formato AA-MM-DD ")
     return model.requerimiento4(catalogo,inicio,final)
+
 # Funciones para la carga de datos
 
 # Funciones de ordenamiento

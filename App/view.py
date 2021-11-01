@@ -41,8 +41,8 @@ def printMenu():
     print("1- Cargar información en el catálogo")
     print("2- ")
 
-catalog = "UFOS-utf8-small.csv"
-cont=controller.init()
+catalog= controller.initCatalog()
+cont=controller.initCatalog()
 """
 Menu principal
 """
@@ -51,19 +51,23 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        mapa = controller.loadData(cont["dateIndex"],catalog)
-        print("El arbol tiene  " + str(om.size(mapa)) + " elementos ")
-        print("El arbol cargado tiene una altura de " + str(om.height(mapa)))
-        print( "Menor llave " + str(om.minKey(mapa)))
-        print("Mayor llave " + str(om.maxKey(mapa)))
-    
+        controller.loadData(catalog)
+        print(om.valueSet(catalog["longitudeIndex"]))
+        #print("El arbol tiene  " + str(om.size(mapa)) + " elementos ")
+       # print("El arbol cargado tiene una altura de " + str(om.height(mapa)))
+       # print( "Menor llave " + str(om.minKey(mapa)))
+        #print("Mayor llave " + str(om.maxKey(mapa)))
+        
     elif int(inputs[0]) == 2:
         print("Hola")
-        variable= controller.loadData(cont["cityIndex"],catalog)
-        variable1= om.get(variable,"las vegas")
-        print("Hay " + str(lt.size(variable1["value"])) + " avistamientos en la ciudad insertada")
-        print("Hay " + str(lt.size(om.keySet(variable))) + " Ciudades diferentes ")
+        
+        variable1= om.get(catalog["cityIndex"],"las vegas")
+        variable1=variable1["value"]
+        variable1=lt.size(variable1)
 
+        print("Hay " + str(variable1) + " avistamientos en la ciudad insertada")
+        print("Hay " + str(lt.size(om.keySet(catalog["cityIndex"]))) + " Ciudades diferentes ")
+        #print(variable)
     elif int(inputs[0]) == 3:
         print("Hola")
         print(controller.requerimiento4(cont["dateIndex"])) 
@@ -73,7 +77,13 @@ while True:
         print(controller.hola(cont["dateIndex"])) 
         
 
+    elif int(inputs[0]) == 5:
+        print("Hola")
+        print(cont)
         
+    elif int(inputs[0]) == 6:
+        print("Hola")
+        print(cont["cityIndex"])
         
     else:
         sys.exit(0)

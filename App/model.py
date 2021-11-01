@@ -49,33 +49,65 @@ def newAnalyzer():
     Retorna el analizador inicializado.
     """
     analyzer = {
-                'dateIndex': None
+                'dateIndex': None,
+                'cityIndex': None,
+                "secondsIndex":None,
+                "longitudeIndex": None,
+
                 }
 
     analyzer['dateIndex'] = om.newMap(omaptype="BRT", comparefunction=compareDates)
     analyzer["cityIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
+    analyzer["secondsIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
+    analyzer["longitudeIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
     return analyzer
 
 
 
 # Funciones para agregar informacion al catalogo
 def addSight(mapa,sight):
-   
+   arbol=mapa["dateIndex"]
+   om.put(arbol,sight["datetime"],sight)
     
-    om.put(mapa,sight["datetime"],sight)
-    nodos= om.size(mapa)
+    
 def addCity(mapa,sight):
-
-    if om.contains(mapa,sight["city"])==False:
+    arbol=mapa["cityIndex"]
+    if om.contains(arbol,sight["city"])==False:
         lista=lt.newList("ARRAY_LIST")
         lt.addLast(lista,sight)
-        om.put(mapa,sight["city"], lista)
+        om.put(arbol,sight["city"], lista)
     else:
-        lista1=om.get(mapa,sight["city"])
+        lista1=om.get(arbol,sight["city"])
         lista1=lista1["value"]
         lt.addLast(lista1,sight)
         
    # print(sight["datetime"])
+
+def addSeconds(mapa,sight):
+    arbol=mapa["secondsIndex"]
+    if om.contains(arbol,sight["duration (seconds)"])==False:
+        lista=lt.newList("ARRAY_LIST")
+        lt.addLast(lista,sight)
+        om.put(arbol,sight["duration (seconds)"], lista)
+    else:
+        lista1=om.get(arbol,sight["duration (seconds)"])
+        lista1=lista1["value"]
+        lt.addLast(lista1,sight)
+        om.put(arbol,sight["duration (seconds)"], lista1)
+
+def addLongitude(mapa,sight):
+    arbol=mapa["longitudeIndex"]
+    sight["longitude"]=float(sight["longitude"])
+    sight["longitude"]=round(sight["longitude"],2)
+    if om.contains(arbol,sight["longitude"])==False:
+        lista=lt.newList("ARRAY_LIST")
+        lt.addLast(lista,sight)
+        om.put(arbol,sight["longitude"], lista)
+    else:
+        lista1=om.get(arbol,sight["longitude"])
+        lista1=lista1["value"]
+        lt.addLast(lista1,sight)
+        om.put(arbol,sight["longitude"], lista1)
     
 # Funciones para creacion de datos
 
