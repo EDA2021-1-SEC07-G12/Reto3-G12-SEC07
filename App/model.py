@@ -96,18 +96,19 @@ def addSeconds(mapa,sight):
         om.put(arbol,sight["duration (seconds)"], lista1)
 
 def addLongitude(mapa,sight):
+
     arbol=mapa["longitudeIndex"]
-    sight["longitude"]=float(sight["longitude"])
-    sight["longitude"]=round(sight["longitude"],2)
-    if om.contains(arbol,sight["longitude"])==False:
+    variable1=float(sight["longitude"])
+    variable1=round(variable1,2)
+    if om.contains(arbol,variable1)==False:
         lista=lt.newList("ARRAY_LIST")
         lt.addLast(lista,sight)
-        om.put(arbol,sight["longitude"], lista)
+        om.put(arbol,float(sight["longitude"]), lista)
     else:
-        lista1=om.get(arbol,sight["longitude"])
+        lista1=om.get(arbol,variable1)
         lista1=lista1["value"]
         lt.addLast(lista1,sight)
-        om.put(arbol,sight["longitude"], lista1)
+        om.put(arbol,float(sight["longitude"]), lista1)
     
 # Funciones para creacion de datos
 
@@ -152,7 +153,7 @@ def requerimiento5(catalogo,lonini,lonfinal,latini,latfinal):
         variable= om.get(catalogo,i)
         variable=variable["value"]
         for j in lt.iterator(variable):
-            if latini<=float(j["latitude"])<=latfinal and j["state"]=="nm":
+            if latini<=float(j["latitude"])<=latfinal :
                 lt.addLast(lista,j)
                 
     return lista
