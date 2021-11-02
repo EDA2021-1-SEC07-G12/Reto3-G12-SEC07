@@ -49,7 +49,7 @@ def loadArtist(catalog):
         model.addCity(catalog, Sight)
         model.addSeconds(catalog, Sight)
         model.addLongitude(catalog, Sight)
-   
+        model.addSighting(catalog, Sight)
 
 def hola(catalogo):
     inicio=input("Introduce hora inicial en formato HH:MM: ")

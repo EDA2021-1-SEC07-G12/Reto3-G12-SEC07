@@ -57,6 +57,7 @@ def newAnalyzer():
                 }
 
     analyzer['dateIndex'] = om.newMap(omaptype="BRT", comparefunction=compareDates)
+    analyzer['sightings'] = lt.newList("ARRAY_LIST")
     analyzer["cityIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
     analyzer["secondsIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
     analyzer["longitudeIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
@@ -65,6 +66,11 @@ def newAnalyzer():
 
 
 # Funciones para agregar informacion al catalogo
+def addSighting(mapa,sight):
+    arbol=mapa["sightings"]
+    
+    lt.addLast(arbol,sight)
+
 def addSight(mapa,sight):
    arbol=mapa["dateIndex"]
    om.put(arbol,sight["datetime"],sight)

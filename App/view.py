@@ -51,9 +51,11 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        controller.loadData(catalog)
         
+        controller.loadData(catalog)
+        #print("Se cargaron " + str(lt.size(om.keySet(catalog["dateIndex"]))))
         print("Datos correctamente cargados mi pana")
+        print(lt.size(catalog["sightings"]))
         
 
 
