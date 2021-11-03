@@ -42,7 +42,7 @@ def loadData(catalog):
     #loadArtWork(catalog)
     
 def loadArtist(catalog):
-    booksfile = cf.data_dir + 'UFOS-utf8-small.csv'
+    booksfile = cf.data_dir + 'UFOS-utf8-large.csv'
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for Sight in input_file:
         model.addSight(catalog, Sight)
@@ -66,6 +66,13 @@ def requerimiento5(catalogo):
     latinit=float(input("Introduce latitud incial: "))
     latfinal=float(input("Introduce latitud incial: "))
     return model.requerimiento5(catalogo,loninit,lonfinal,latinit,latfinal)
+
+def bono(catalogo):
+    loninit=float(input("Introduce longitud incial: "))
+    lonfinal=float(input("Introduce longitud final: "))
+    latinit=float(input("Introduce latitud incial: "))
+    latfinal=float(input("Introduce latitud incial: "))
+    return model.bono(catalogo,loninit,lonfinal,latinit,latfinal)
 # Funciones para la carga de datos
 
 # Funciones de ordenamiento

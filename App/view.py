@@ -97,6 +97,9 @@ while True:
         print("Hola")
         print(controller.requerimiento5(catalog))
 
+    elif int(inputs[0]) == 8:
+        print("Hola")
+        print(controller.bono(catalog))
 
     else:
         sys.exit(0)

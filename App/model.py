@@ -33,7 +33,7 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.Algorithms.Sorting import selectionsort as ss
 from DISClib.Algorithms.Trees import traversal as tv
-
+import folium
 assert cf
 
 """
@@ -174,6 +174,23 @@ def requerimiento5(catalogo,lonini,lonfinal,latini,latfinal):
                 
     return lista
 
+def bono(catalogo,lonini,lonfinal,latini,latfinal):
+    catalogo=catalogo["longitudeIndex"]
+    promediolon=(lonini+lonfinal)/2
+    promediolat=(latfinal+latini)/2
+    m = folium.Map(location=[promediolat, promediolon], zoom_start=10)
+    lista=lt.newList("ARRAY_LIST")
+    longitudes=om.keys(catalogo,lonini,lonfinal)    
+    for i in lt.iterator(longitudes):
+        variable= om.get(catalogo,i)
+        variable=variable["value"]
+        for j in lt.iterator(variable):
+            if latini<=float(j["latitude"])<=latfinal :
+                folium.Marker(
+    [j["latitude"], j["longitude"]], popup="Datetime : " + j["datetime"]).add_to(m)
+    
+    
+    m.save("index.html")
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
