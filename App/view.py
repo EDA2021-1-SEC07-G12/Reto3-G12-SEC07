@@ -55,7 +55,9 @@ while True:
         controller.loadData(catalog)
         #print("Se cargaron " + str(lt.size(om.keySet(catalog["dateIndex"]))))
         print("Datos correctamente cargados mi pana")
-        print(lt.size(catalog["sightings"]))
+        xd= om.keySet(catalog["secondsIndex"])
+        for i in lt.iterator(xd):
+            print(i)
         
 
 
@@ -76,11 +78,11 @@ while True:
         #print(variable)
     elif int(inputs[0]) == 3:
         print("Hola")
-        print(controller.requerimiento4(cont["dateIndex"])) 
+        print(controller.requerimiento4(catalog)) 
 
     elif int(inputs[0]) == 4:
         print("Hola")
-        print(controller.hola(cont["dateIndex"])) 
+        print(controller.hola(catalog)) 
         
 
     elif int(inputs[0]) == 5:

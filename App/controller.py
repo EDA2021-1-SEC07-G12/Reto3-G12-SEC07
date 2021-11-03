@@ -42,7 +42,7 @@ def loadData(catalog):
     #loadArtWork(catalog)
     
 def loadArtist(catalog):
-    booksfile = cf.data_dir + 'UFOS-utf8-large.csv'
+    booksfile = cf.data_dir + 'UFOS-utf8-small.csv'
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for Sight in input_file:
         model.addSight(catalog, Sight)
@@ -50,7 +50,7 @@ def loadArtist(catalog):
         model.addSeconds(catalog, Sight)
         model.addLongitude(catalog, Sight)
         model.addSighting(catalog, Sight)
-
+        model.addHour(catalog, Sight)
 def hola(catalogo):
     inicio=input("Introduce hora inicial en formato HH:MM: ")
     final=input("Introduce hora final en formato HH:MM: ")

@@ -31,6 +31,7 @@ from DISClib.ADT import orderedmap as om
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.Algorithms.Sorting import selectionsort as ss
 from DISClib.Algorithms.Trees import traversal as tv
 
 assert cf
@@ -53,6 +54,8 @@ def newAnalyzer():
                 'cityIndex': None,
                 "secondsIndex":None,
                 "longitudeIndex": None,
+                "hoursIndex": None,
+
 
                 }
 
@@ -61,11 +64,27 @@ def newAnalyzer():
     analyzer["cityIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
     analyzer["secondsIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
     analyzer["longitudeIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
+    analyzer["longitudeIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
+
+
     return analyzer
 
 
 
 # Funciones para agregar informacion al catalogo
+
+def addHour(mapa,sight):
+    arbol=mapa["secondsIndex"]
+    hora = sight["datetime"][11:-3]
+    if om.contains(arbol,hora)==False:
+        lista=lt.newList("ARRAY_LIST")
+        lt.addLast(lista,sight)
+        om.put(arbol,hora, lista)
+    else:
+        lista1=om.get(arbol,hora)
+        lista1=lista1["value"]
+        lt.addLast(lista1,sight)
+        
 def addSighting(mapa,sight):
     arbol=mapa["sightings"]
     
@@ -121,31 +140,22 @@ def addLongitude(mapa,sight):
 
 # Funciones de consulta
 def hola(catalogo,inicio,final):
-    lista=tv.postorder(catalogo)
-    mapa=mp.newMap(150,
-        maptype="CHAINING", loadfactor=1.5)
-    contador=0
-    retorno=lt.newList("ARRAY_LIST")
-    retorno1=lt.newList("ARRAY_LIST")
-    for i in lt.iterator(lista):
-        hora = i["datetime"][11:-3]
-        if inicio<=hora<=final:
-            contador+= 1
-            if mp.contains(mapa,hora)==False:
-                mp.put(mapa,hora,1)
-            else:
-                value=mp.get(mapa,hora)["value"]
-                value+=1
-                mp.put(mapa,hora,value)
-   
-    for j in lt.iterator(mp.keySet(mapa)):
-        lt.addLast(retorno,mp.get(mapa,j))
-    ordenado=  ms.sort(retorno,ordenarFecha)
-    ordenado=lt.subList(retorno,1,5)
-    lt.addLast(retorno1,contador)
-    lt.addLast(retorno1,lt.size(mp.keySet(mapa)))
-    lt.addLast(retorno1,ordenado)
-    return retorno1
+    catalogo=catalogo["secondsIndex"]
+    lista=lt.newList("ARRAY_LIST")
+    rango=om.values(catalogo,inicio,final)
+    for i in lt.iterator(rango):
+        for j in lt.iterator(i):
+            lt.addLast(lista,j)
+    
+    ordenado=ms.sort(lista,ordenarFecha1)
+    sublista=lt.subList(ordenado,ordenado["size"]-5,5)
+    sublista1=lt.subList(ordenado,1,5)
+    return sublista1
+    
+   # for i in lt.iterator(ordenado):
+   #     print(i)
+    
+    
 
 def requerimiento4(catalogo,inicio,final):
     
@@ -154,7 +164,7 @@ def requerimiento4(catalogo,inicio,final):
 def requerimiento5(catalogo,lonini,lonfinal,latini,latfinal):
     catalogo=catalogo["longitudeIndex"]
     lista=lt.newList("ARRAY_LIST")
-    longitudes=om.keys(catalogo,lonini,lonfinal)
+    longitudes=om.keys(catalogo,lonini,lonfinal)    
     for i in lt.iterator(longitudes):
         variable= om.get(catalogo,i)
         variable=variable["value"]
@@ -184,3 +194,17 @@ def ordenarFecha(date1, date2):
         return 1
     else:
         return 0
+
+
+def ordenarFecha1(date1, date2):
+    
+    if (date1["datetime"] >= date2["datetime"]):
+        return 1
+    else:
+        return 0
+
+def ordenarHora(hora1,hora2):
+    if (hora1["size"] >= hora2["size"]):
+        return True
+    else:
+        return False
