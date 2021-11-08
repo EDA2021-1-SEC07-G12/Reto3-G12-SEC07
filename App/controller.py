@@ -42,15 +42,15 @@ def loadData(catalog):
     #loadArtWork(catalog)
     
 def loadArtist(catalog):
-    booksfile = cf.data_dir + 'UFOS-utf8-large.csv'
+    booksfile = cf.data_dir + 'UFOS-utf8-small.csv'
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for Sight in input_file:
         model.addSight(catalog, Sight)
         model.addCity(catalog, Sight)
-        model.addSeconds(catalog, Sight)
         model.addLongitude(catalog, Sight)
         model.addSighting(catalog, Sight)
         model.addHour(catalog, Sight)
+        model.addTime(catalog, Sight)
 def hola(catalogo):
     inicio=input("Introduce hora inicial en formato HH:MM: ")
     final=input("Introduce hora final en formato HH:MM: ")
@@ -73,6 +73,16 @@ def bono(catalogo):
     latinit=float(input("Introduce latitud incial: "))
     latfinal=float(input("Introduce latitud incial: "))
     return model.bono(catalogo,loninit,lonfinal,latinit,latfinal)
+
+def req_2(catalogo):
+
+    inferior=float(input("Introduce limite inferior en segundos: "))
+
+    superior=float(input("Introduce limite superior en segundos: "))
+
+    return model.requerimiento_2(catalogo,inferior,superior)
+
+
 # Funciones para la carga de datos
 
 # Funciones de ordenamiento

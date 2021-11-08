@@ -56,9 +56,7 @@ while True:
         #print("Se cargaron " + str(lt.size(om.keySet(catalog["dateIndex"]))))
         print("Datos correctamente cargados mi pana")
         xd= om.keySet(catalog["secondsIndex"])
-        for i in lt.iterator(xd):
-            print(i)
-        
+       
 
 
         #print("El arbol tiene  " + str(om.size(mapa)) + " elementos ")
@@ -77,8 +75,26 @@ while True:
         print("Hay " + str(lt.size(om.keySet(catalog["cityIndex"]))) + " Ciudades diferentes ")
         #print(variable)
     elif int(inputs[0]) == 3:
-        print("Hola")
-        print(controller.requerimiento4(catalog)) 
+
+        resp=controller.req_2(catalog["durationIndex"])
+
+        #resp=catalog["durationIndex"]
+        #resp=controller.req_2(resp)
+        
+        print(resp)
+        print('\n')
+
+        print("Los avistamientos con mayor duracion fueron: ")
+
+        print(('Duración: {} - Cantidad: {}').format(resp[1][0],resp[1][1]))
+
+        print('\n')
+
+        print('Los avistamientos con menor y mayor duración en el intervalo insertado son: ')
+
+        for i in lt.iterator(resp[0]):
+
+            print (i['elements'])
 
     elif int(inputs[0]) == 4:
         print("Hola")
@@ -86,8 +102,7 @@ while True:
         
 
     elif int(inputs[0]) == 5:
-        print("Hola")
-        print(cont)
+        print(controller.requerimiento4(catalog))
         
     elif int(inputs[0]) == 6:
         print("Hola")

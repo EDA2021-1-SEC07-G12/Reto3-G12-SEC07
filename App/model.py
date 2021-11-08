@@ -33,7 +33,7 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.Algorithms.Sorting import selectionsort as ss
 from DISClib.Algorithms.Trees import traversal as tv
-import folium
+#import folium
 assert cf
 
 """
@@ -64,7 +64,8 @@ def newAnalyzer():
     analyzer["cityIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
     analyzer["secondsIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
     analyzer["longitudeIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
-    analyzer["longitudeIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
+    
+    analyzer["durationIndex"]= om.newMap(omaptype="BRT", comparefunction=compareDates)
 
 
     return analyzer
@@ -72,7 +73,7 @@ def newAnalyzer():
 
 
 # Funciones para agregar informacion al catalogo
-
+0
 def addHour(mapa,sight):
     arbol=mapa["secondsIndex"]
     hora = sight["datetime"][11:-3]
@@ -108,17 +109,21 @@ def addCity(mapa,sight):
         
    # print(sight["datetime"])
 
-def addSeconds(mapa,sight):
-    arbol=mapa["secondsIndex"]
-    if om.contains(arbol,sight["duration (seconds)"])==False:
+
+
+def addTime(mapa,sight):
+    mapa=mapa["durationIndex"]
+    
+
+    duracion=float(sight["duration (seconds)"])
+    if om.contains(mapa,duracion)==False:
         lista=lt.newList("ARRAY_LIST")
         lt.addLast(lista,sight)
-        om.put(arbol,sight["duration (seconds)"], lista)
+        om.put(mapa,duracion, lista)
     else:
-        lista1=om.get(arbol,sight["duration (seconds)"])
+        lista1=om.get(mapa,duracion)
         lista1=lista1["value"]
         lt.addLast(lista1,sight)
-        om.put(arbol,sight["duration (seconds)"], lista1)
 
 def addLongitude(mapa,sight):
 
@@ -139,6 +144,90 @@ def addLongitude(mapa,sight):
 
 
 # Funciones de consulta
+def requerimiento_2(catalogo,inferior,superior):
+
+    
+    e=om.get(catalogo,om.maxKey(catalogo))
+
+    max=e['key']
+
+    cantidad=lt.size(e['value'])
+
+    llaves=om.keys(catalogo,inferior,superior)
+
+    lista=lt.newList('ARRAY_LIST')
+
+    for i in lt.iterator(llaves):
+
+        tabla=om.get(catalogo,i)
+
+        valor=tabla['value']
+
+        for j in lt.iterator(valor):
+
+            lt.addLast(lista,j)
+
+
+
+    l3_3=lt.newList('ARRAY_LIST')
+
+    if lt.size(lista)>6:
+
+        contador1=3
+
+        contador2=-2
+
+    while contador1>=1 :
+
+            temp=lt.newList('ARRAY_LIST')
+
+            elemento=lt.getElement(lista,contador1)
+
+            lt.addLast(temp,elemento['datetime'])
+
+            lt.addLast(temp,elemento['city'])
+
+            lt.addLast(temp,elemento['country'])
+
+            lt.addLast(temp,elemento['duration (seconds)'])
+
+            lt.addLast(temp,elemento['shape'])
+
+
+
+            lt.addLast(l3_3,temp)
+
+            contador1-=1
+
+    while contador2<=0:
+
+            temp=lt.newList('ARRAY_LIST')
+
+            elemento=lt.getElement(lista,contador2)
+
+            lt.addLast(temp,elemento['datetime'])
+
+            lt.addLast(temp,elemento['city'])
+
+            lt.addLast(temp,elemento['country'])
+
+            lt.addLast(temp,elemento['duration (seconds)'])
+
+            lt.addLast(temp,elemento['shape'])
+
+
+
+            lt.addLast(l3_3,temp)
+
+            contador2+=1
+
+       
+
+
+
+    return (l3_3,(max,cantidad))
+
+
 def hola(catalogo,inicio,final):
     catalogo=catalogo["secondsIndex"]
     lista=lt.newList("ARRAY_LIST")
@@ -158,8 +247,17 @@ def hola(catalogo,inicio,final):
     
 
 def requerimiento4(catalogo,inicio,final):
-    
-    return om.keys(catalogo,inicio,final)
+    catalogo=catalogo["dateIndex"]
+    contador=0
+    lista=lt.newList("ARRAY_LIST")
+    rango= om.keys(catalogo,inicio,final)
+   ## tamano=lt.size(rango)
+    rango= om.keys(catalogo,inicio,final)
+    for i in lt.iterator(rango):
+        valor=om.get(catalogo,i)
+        lt.addLast(lista,valor["value"])
+    lista=ms.sort(lista,ordenarFecha2)
+    return (lt.size(rango),lista)
 
 def requerimiento5(catalogo,lonini,lonfinal,latini,latfinal):
     catalogo=catalogo["longitudeIndex"]
@@ -219,7 +317,12 @@ def ordenarFecha1(date1, date2):
         return 1
     else:
         return 0
-
+def ordenarFecha2(date1, date2):
+    
+    if (date1["datetime"] >= date2["datetime"]):
+        return 1
+    else:
+        return 0
 def ordenarHora(hora1,hora2):
     if (hora1["size"] >= hora2["size"]):
         return True
