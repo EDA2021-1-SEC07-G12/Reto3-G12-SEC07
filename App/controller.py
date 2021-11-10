@@ -51,10 +51,15 @@ def loadArtist(catalog):
         model.addSighting(catalog, Sight)
         model.addHour(catalog, Sight)
         model.addTime(catalog, Sight)
-def hola(catalogo):
+
+def requerimiento1(catalog):
+    ciudad=input("Inserte nombre de la ciudad a consultar: ")
+
+    return model.requerimiento_1(catalog,ciudad)
+def requerimiento_3(catalogo):
     inicio=input("Introduce hora inicial en formato HH:MM: ")
     final=input("Introduce hora final en formato HH:MM: ")
-    return model.hola(catalogo,inicio,final)
+    return model.requerimiento_3(catalogo,inicio,final)
 
 def requerimiento4(catalogo):
     inicio=input("Introduce hora inicial en formato AA-MM-DD ")

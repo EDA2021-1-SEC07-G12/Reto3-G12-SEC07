@@ -55,6 +55,7 @@ def newAnalyzer():
                 "secondsIndex":None,
                 "longitudeIndex": None,
                 "hoursIndex": None,
+                "sightings":None
 
 
                 }
@@ -77,6 +78,7 @@ def newAnalyzer():
 def addHour(mapa,sight):
     arbol=mapa["secondsIndex"]
     hora = sight["datetime"][11:-3]
+    sight["time"]=hora
     if om.contains(arbol,hora)==False:
         lista=lt.newList("ARRAY_LIST")
         lt.addLast(lista,sight)
@@ -144,6 +146,30 @@ def addLongitude(mapa,sight):
 
 
 # Funciones de consulta
+
+
+def requerimiento_1(catalog,ciudad):
+    catalog=catalog["cityIndex"]
+    ciudades=lt.size(om.keySet(catalog))
+    variable1= om.get(catalog,ciudad)
+    cantidad = variable1["value"]["size"]
+    listaobras=lt.newList("ARRAY_LIST")
+    obras=ms.sort(variable1["value"],ordenarFecha2)
+    sublistarecientes=lt.subList(obras,1,3)
+    sublistaantiguas=lt.subList(obras,lt.size(obras)-2,3)
+
+    retorno=lt.newList('ARRAY_LIST')
+
+    lt.addLast(retorno, ciudades)
+    lt.addLast(retorno, cantidad)
+    lt.addLast(retorno, sublistarecientes)
+    lt.addLast(retorno, sublistaantiguas)
+    
+    ciudadescan=lt.newList('ARRAY_LIST')
+
+    for i in lt.iterator(om.keySet(catalog)):
+        lt.addLast(ciudadescan,om.get(catalog,i)["value"])
+    return retorno
 def requerimiento_2(catalogo,inferior,superior):
 
     
@@ -228,19 +254,32 @@ def requerimiento_2(catalogo,inferior,superior):
     return (l3_3,(max,cantidad))
 
 
-def hola(catalogo,inicio,final):
+def requerimiento_3(catalogo,inicio,final):
+    retorno=lt.newList('ARRAY_LIST')
     catalogo=catalogo["secondsIndex"]
     lista=lt.newList("ARRAY_LIST")
+    cantidad=lt.size(om.keySet(catalogo))
     rango=om.values(catalogo,inicio,final)
     for i in lt.iterator(rango):
         for j in lt.iterator(i):
+            
             lt.addLast(lista,j)
+    lista1=lt.newList("ARRAY_LIST")
+    ordenado=ms.sort(lista,ordenarTiempo)
+    sublista=lt.subList(ordenado,ordenado["size"]-2,3)
+    sublista1=lt.subList(ordenado,1,3)
     
-    ordenado=ms.sort(lista,ordenarFecha1)
-    sublista=lt.subList(ordenado,ordenado["size"]-5,5)
-    sublista1=lt.subList(ordenado,1,5)
-    return sublista1
+    for i in lt.iterator(om.keys(catalogo,inicio,final)):
+        lt.addLast(lista1,om.get(catalogo,i))
+
+    lista2=ms.sort(lista1,ordenarFecha)
+
+    lt.addLast(retorno,lt.firstElement(lista2))
+    lt.addLast(retorno,lt.size(lista))
+    lt.addLast(retorno,cantidad)
+    lt.addLast(retorno,lt.subList(ordenado,1,5))
     
+    return retorno
    # for i in lt.iterator(ordenado):
    #     print(i)
     
@@ -328,3 +367,16 @@ def ordenarHora(hora1,hora2):
         return True
     else:
         return False
+
+def ordenarCiudad(ciudad1,ciudad2):
+    if (ciudad1["value"]["size"] >= ciudad2["value"]["size"]):
+        return True
+    else:
+        return False
+
+def ordenarTiempo(tiempo1,tiempo2):
+    if (tiempo1["time"] >= tiempo1["time"]):
+        return True
+    else:
+        return False
+

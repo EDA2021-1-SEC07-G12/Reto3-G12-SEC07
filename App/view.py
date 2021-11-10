@@ -54,9 +54,12 @@ while True:
         
         controller.loadData(catalog)
         #print("Se cargaron " + str(lt.size(om.keySet(catalog["dateIndex"]))))
-        print("Datos correctamente cargados mi pana")
-        xd= om.keySet(catalog["secondsIndex"])
-       
+        print("Datos correctamente cargados ")
+        print("Se cargaron " + str(lt.size(catalog["sightings"])) + " datos  ")
+        
+        print("Hay " + str(lt.size(om.keySet(catalog["cityIndex"]))) + " Ciudades diferentes ")
+        print("El avistamiento mas antiguo " +  str(om.minKey(catalog["dateIndex"])))
+        print("El avistamiento mas reciente " +  str(om.maxKey(catalog["dateIndex"])))
 
 
         #print("El arbol tiene  " + str(om.size(mapa)) + " elementos ")
@@ -65,14 +68,15 @@ while True:
         #print("Mayor llave " + str(om.maxKey(mapa)))
         
     elif int(inputs[0]) == 2:
-        print("Hola")
         
-        variable1= om.get(catalog["cityIndex"],"las vegas")
-        variable1=variable1["value"]
-        variable1=lt.size(variable1)
+        
+        resp=controller.requerimiento1(catalog)
+        print(resp)
 
-        print("Hay " + str(variable1) + " avistamientos en la ciudad insertada")
-        print("Hay " + str(lt.size(om.keySet(catalog["cityIndex"]))) + " Ciudades diferentes ")
+        #print("Hay " + str(variable1) + " avistamientos en la ciudad insertada")
+        
+
+        
         #print(variable)
     elif int(inputs[0]) == 3:
 
@@ -98,11 +102,11 @@ while True:
 
     elif int(inputs[0]) == 4:
         print("Hola")
-        print(controller.hola(catalog)) 
+        print(controller.requerimiento_3(catalog)) 
         
 
     elif int(inputs[0]) == 5:
-        print(controller.requerimiento4(catalog))
+        print(controller.requerimiento_3(catalog))
         
     elif int(inputs[0]) == 6:
         print("Hola")
