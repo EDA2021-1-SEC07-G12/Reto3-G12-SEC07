@@ -27,7 +27,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import orderedmap as om
 from DISClib.Algorithms.Trees import traversal as tv
 assert cf
-
+from DISClib.ADT import map as mp
 
 """
 La vista se encarga de la interacción con el usuario
@@ -39,7 +39,9 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Cargar avistamientos por ciudad insertada")
+    print("3- Contar los avistamientos por duración")
+    print("4- Contar los avistamientos por Hora/Minutos")
 
 catalog= controller.initCatalog()
 cont=controller.initCatalog()
@@ -71,8 +73,24 @@ while True:
         
         
         resp=controller.requerimiento1(catalog)
-        print(resp)
 
+        mapa=lt.getElement(resp,5)
+
+        mapa=lt.subList(mapa,1,5)
+        print("Las 5 ciudades con mas avistamientos son : ")
+        for i in lt.iterator(mapa):
+
+            print("Ciudad: " + str(i["key"] + " Avistamientos " + str(i["value"])))
+        print("Existen " + str(lt.getElement(resp,1)) + " ciudades con algún tipo de avistamiento")
+        print("Existen " + str(lt.getElement(resp,2)) + " avistamientos en la ciudad insertada")
+        print("Los avistamientos mas recientes en la ciudad insertada : ")
+        for i in lt.iterator(lt.getElement(resp,3)):
+            print("Fecha y hora :" + str(i["datetime"])+ " ciudad: " + str(i["city"]) + " país: " + str(i["country"]) + " duración:" + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
+        print("Los avistamientos mas antiguos en la ciudad insertada : ")
+        for i in lt.iterator(lt.getElement(resp,4)):
+            print("Fecha y hora :" + str(i["datetime"]) + " país: " + str(i["country"]) + " duración: " + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
+        
+            
         #print("Hay " + str(variable1) + " avistamientos en la ciudad insertada")
         
 
@@ -102,9 +120,24 @@ while True:
 
     elif int(inputs[0]) == 4:
         print("Hola")
-        print(controller.requerimiento_3(catalog)) 
+        resp= controller.requerimiento_3(catalog)
+        #print(resp)
+        print("Las horas mas tardías con su numero de avistamientos son: ")
+
+        for i in lt.iterator(lt.getElement(resp,1)):
+            print("Ciudad: " + str(i["key"]) + " Avistamientos: " + str(i["value"]["size"]))
+        
+        avistamientos= lt.getElement(resp,2)
+        avistamientos1= lt.subList(avistamientos,1,3)
+
+        avistamientos2= lt.subList(avistamientos,lt.size(avistamientos)-2,3)
         
 
+        for i in lt.iterator(avistamientos1):
+            print("Fecha y hora :" + str(i["datetime"])+ " ciudad: " + str(i["city"]) + " país: " + str(i["country"]) + " duración:" + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
+        print("Los avistamientos mas antiguos en la ciudad insertada : ")
+        for i in lt.iterator(avistamientos2):
+            print("Fecha y hora :" + str(i["datetime"]) + " país: " + str(i["country"]) + " duración: " + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
     elif int(inputs[0]) == 5:
         print(controller.requerimiento_3(catalog))
         

@@ -166,9 +166,20 @@ def requerimiento_1(catalog,ciudad):
     lt.addLast(retorno, sublistaantiguas)
     
     ciudadescan=lt.newList('ARRAY_LIST')
-
+    mapa = mp.newMap(20000,
+        maptype="CHAINGING", loadfactor=1)
     for i in lt.iterator(om.keySet(catalog)):
-        lt.addLast(ciudadescan,om.get(catalog,i)["value"])
+        ciudad= om.get(catalog,i)
+        mp.put(mapa,i,ciudad["value"]["size"])
+    llaves1=lt.newList('ARRAY_LIST')
+    for i in lt.iterator(mp.keySet(mapa)):
+        llaves=mp.get(mapa,i)
+        lt.addLast(llaves1,llaves)
+
+    llaves1=ms.sort(llaves1,ordenarCiudad)
+    
+
+    lt.addLast(retorno,llaves1)
     return retorno
 def requerimiento_2(catalogo,inferior,superior):
 
@@ -265,20 +276,20 @@ def requerimiento_3(catalogo,inicio,final):
             
             lt.addLast(lista,j)
     lista1=lt.newList("ARRAY_LIST")
-    ordenado=ms.sort(lista,ordenarTiempo)
-    sublista=lt.subList(ordenado,ordenado["size"]-2,3)
-    sublista1=lt.subList(ordenado,1,3)
+    ordenado=ms.sort(lista,ordenarFecha2)
+   # sublista=lt.subList(ordenado,ordenado["size"]-2,3)
+  #  sublista1=lt.subList(ordenado,1,3)
     
     for i in lt.iterator(om.keys(catalogo,inicio,final)):
         lt.addLast(lista1,om.get(catalogo,i))
 
     lista2=ms.sort(lista1,ordenarFecha)
 
-    lt.addLast(retorno,lt.firstElement(lista2))
-    lt.addLast(retorno,lt.size(lista))
-    lt.addLast(retorno,cantidad)
-    lt.addLast(retorno,lt.subList(ordenado,1,5))
-    
+    lt.addLast(retorno,lt.subList(lista2,1,5))
+    #lt.addLast(retorno,lt.size(lista))
+    #lt.addLast(retorno,cantidad)
+    #lt.addLast(retorno,lt.subList(ordenado,1,5))
+    lt.addLast(retorno,ordenado)
     return retorno
    # for i in lt.iterator(ordenado):
    #     print(i)
@@ -369,7 +380,7 @@ def ordenarHora(hora1,hora2):
         return False
 
 def ordenarCiudad(ciudad1,ciudad2):
-    if (ciudad1["value"]["size"] >= ciudad2["value"]["size"]):
+    if (ciudad1["value"] >= ciudad2["value"]):
         return True
     else:
         return False

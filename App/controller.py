@@ -42,7 +42,7 @@ def loadData(catalog):
     #loadArtWork(catalog)
     
 def loadArtist(catalog):
-    booksfile = cf.data_dir + 'UFOS-utf8-small.csv'
+    booksfile = cf.data_dir + 'UFOS-utf8-large.csv'
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for Sight in input_file:
         model.addSight(catalog, Sight)
