@@ -24,7 +24,7 @@
  * Dario Correal - Version inicial
  """
 
-
+import time
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import orderedmap as om
@@ -35,7 +35,7 @@ from DISClib.Algorithms.Sorting import selectionsort as ss
 from DISClib.Algorithms.Trees import traversal as tv
 import folium
 assert cf
-
+import webbrowser
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
@@ -276,7 +276,7 @@ def requerimiento_3(catalogo,inicio,final):
     retorno=lt.newList('ARRAY_LIST')
     catalogo=catalogo["secondsIndex"]
     lista=lt.newList("ARRAY_LIST")
-    cantidad=lt.size(om.keySet(catalogo))
+    
     rango=om.values(catalogo,inicio,final)
     for i in lt.iterator(rango):
         for j in lt.iterator(i):
@@ -284,8 +284,7 @@ def requerimiento_3(catalogo,inicio,final):
             lt.addLast(lista,j)
     lista1=lt.newList("ARRAY_LIST")
     ordenado=ms.sort(lista,ordenarFecha2)
-   # sublista=lt.subList(ordenado,ordenado["size"]-2,3)
-  #  sublista1=lt.subList(ordenado,1,3)
+   
     
     for i in lt.iterator(om.keys(catalogo,inicio,final)):
         lt.addLast(lista1,om.get(catalogo,i))
@@ -293,13 +292,10 @@ def requerimiento_3(catalogo,inicio,final):
     lista2=ms.sort(lista1,ordenarFecha)
 
     lt.addLast(retorno,lt.subList(lista2,1,5))
-    #lt.addLast(retorno,lt.size(lista))
-    #lt.addLast(retorno,cantidad)
-    #lt.addLast(retorno,lt.subList(ordenado,1,5))
+    
     lt.addLast(retorno,ordenado)
     return retorno
-   # for i in lt.iterator(ordenado):
-   #     print(i)
+   
     
     
 
@@ -337,6 +333,7 @@ def requerimiento4(catalogo,inicio,final):
 
 
 def requerimiento5(catalogo,lonini,lonfinal,latini,latfinal):
+    start_time = time.process_time()
     catalogo=catalogo["longitudeIndex"]
     lista=lt.newList("ARRAY_LIST")
     longitudes=om.keys(catalogo,lonini,lonfinal)    
@@ -351,6 +348,10 @@ def requerimiento5(catalogo,lonini,lonfinal,latini,latfinal):
     lt.addLast(retorno,lt.size(lista))         
     lt.addLast(retorno,lt.subList(lista,1,5))   
     lt.addLast(retorno,lt.subList(lista,lt.size(lista)-4,5)) 
+
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    print(elapsed_time_mseg)
     return retorno
 
 def bono(catalogo,lonini,lonfinal,latini,latfinal):
@@ -369,7 +370,9 @@ def bono(catalogo,lonini,lonfinal,latini,latfinal):
     [j["latitude"], j["longitude"]], popup="Datetime : " + j["datetime"]).add_to(m)
     
     
-    m.save("file:///C:/Users/User/Reto3-G12-SEC07-5/App/index.html")
+    m.save(cf.data_dir + 'index.html')
+    webbrowser.open(cf.data_dir + 'index.html')
+    return "Ubicaciones cargadas en el mapa"
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento

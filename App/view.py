@@ -44,6 +44,7 @@ def printMenu():
     print("4- Contar los avistamientos por Hora/Minutos")
     print("5- Contar los avistamientos en un rango de fechas")
     print("6- Contar los avistamientos de una Zona Geográfica")
+    print("7- Cargar ubicacion de los avistamientos en el mapa")
 catalog= controller.initCatalog()
 cont=controller.initCatalog()
 """
@@ -172,18 +173,8 @@ while True:
         
 
     elif int(inputs[0]) == 7:
-        print("Hola")
-        resp= controller.requerimiento5(catalog)
-        print("Hay una cantidad de " + str(lt.getElement(resp,1)) + " avistamientos en la zona geografica insertada")
         
-        print("Los avistamientos mas recientes en la zona insertada son")
-        for i in lt.iterator(lt.getElement(resp,2)):
-            print("Fecha y hora: " + str(i["datetime"])+ " ciudad: " + str(i["city"]) + " país: " + str(i["country"]) + " duración:" + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) + " latitud: " + str(i["latitude"]) + " longitud: " + str(i["longitude"]))) 
-        print("Los avistamientos mas antiguos en el intervalo insertado : ")
-        for i in lt.iterator(lt.getElement(resp,3)):
-            print("Fecha y hora: " + str(i["datetime"]) + " país: " + str(i["country"]) + " duración: " + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) + " latitud: " + str(i["latitude"]) + " longitud: " + str(i["longitude"])))
-        
-        controller.bono(catalog)
+        print(controller.bono(catalog))
 
     else:
         sys.exit(0)
