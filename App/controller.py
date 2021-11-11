@@ -66,17 +66,17 @@ def requerimiento4(catalogo):
     final=input("Introduce hora final en formato AA-MM-DD ")
     return model.requerimiento4(catalogo,inicio,final)
 def requerimiento5(catalogo):
-    loninit=float(input("Introduce longitud incial: "))
+    loninit=float(input("Introduce longitud inicial: "))
     lonfinal=float(input("Introduce longitud final: "))
-    latinit=float(input("Introduce latitud incial: "))
-    latfinal=float(input("Introduce latitud incial: "))
+    latinit=float(input("Introduce latitud inicial: "))
+    latfinal=float(input("Introduce latitud final: "))
     return model.requerimiento5(catalogo,loninit,lonfinal,latinit,latfinal)
 
 def bono(catalogo):
     loninit=float(input("Introduce longitud incial: "))
     lonfinal=float(input("Introduce longitud final: "))
-    latinit=float(input("Introduce latitud incial: "))
-    latfinal=float(input("Introduce latitud incial: "))
+    latinit=float(input("Introduce latitud inicial: "))
+    latfinal=float(input("Introduce latitud final: "))
     return model.bono(catalogo,loninit,lonfinal,latinit,latfinal)
 
 def req_2(catalogo):

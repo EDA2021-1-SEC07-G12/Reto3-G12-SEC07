@@ -33,7 +33,7 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.Algorithms.Sorting import selectionsort as ss
 from DISClib.Algorithms.Trees import traversal as tv
-#import folium
+import folium
 assert cf
 
 """
@@ -94,8 +94,15 @@ def addSighting(mapa,sight):
     lt.addLast(arbol,sight)
 
 def addSight(mapa,sight):
-   arbol=mapa["dateIndex"]
-   om.put(arbol,sight["datetime"],sight)
+    arbol=mapa["dateIndex"]
+    if om.contains(arbol,sight["datetime"])==False:
+        lista=lt.newList("ARRAY_LIST")
+        lt.addLast(lista,sight)
+        om.put(arbol,sight["datetime"], lista)
+    else:
+        lista1=om.get(arbol,sight["datetime"])
+        lista1=lista1["value"]
+        lt.addLast(lista1,sight)
     
     
 def addCity(mapa,sight):
@@ -301,13 +308,33 @@ def requerimiento4(catalogo,inicio,final):
     contador=0
     lista=lt.newList("ARRAY_LIST")
     rango= om.keys(catalogo,inicio,final)
+    rango1= om.values(catalogo,inicio,final)
    ## tamano=lt.size(rango)
-    rango= om.keys(catalogo,inicio,final)
+    listar=lt.newList("ARRAY_LIST")
+    
+   
     for i in lt.iterator(rango):
+        
         valor=om.get(catalogo,i)
-        lt.addLast(lista,valor["value"])
-    lista=ms.sort(lista,ordenarFecha2)
-    return (lt.size(rango),lista)
+        lt.addLast(lista,valor)
+
+    for i in lt.iterator(rango1):
+        for j in lt.iterator(i):
+            
+            lt.addLast(listar,j)
+        
+    listar=ms.sort(listar,ordenarFecha2)
+    
+    retorno=lt.newList("ARRAY_LIST")
+    lt.addLast(retorno,lt.size(rango) )
+    lt.addLast(retorno,lt.size(om.keySet(catalogo)))
+    lt.addLast(retorno,lt.subList(lista,1,5))
+    lt.addLast(retorno,lt.subList(lista,lt.size(lista)-4,5))
+    lt.addLast(retorno,om.get(catalogo,lt.getElement(rango,1)))
+    lt.addLast(retorno,lt.subList(listar,1,3))
+    lt.addLast(retorno,lt.subList(listar,lt.size(listar)-2,3))
+    return retorno
+
 
 def requerimiento5(catalogo,lonini,lonfinal,latini,latfinal):
     catalogo=catalogo["longitudeIndex"]
@@ -319,8 +346,12 @@ def requerimiento5(catalogo,lonini,lonfinal,latini,latfinal):
         for j in lt.iterator(variable):
             if latini<=float(j["latitude"])<=latfinal :
                 lt.addLast(lista,j)
-                
-    return lista
+    lista=ms.sort(lista,ordenarFecha2)
+    retorno=lt.newList("ARRAY_LIST")
+    lt.addLast(retorno,lt.size(lista))         
+    lt.addLast(retorno,lt.subList(lista,1,5))   
+    lt.addLast(retorno,lt.subList(lista,lt.size(lista)-4,5)) 
+    return retorno
 
 def bono(catalogo,lonini,lonfinal,latini,latfinal):
     catalogo=catalogo["longitudeIndex"]
@@ -338,7 +369,7 @@ def bono(catalogo,lonini,lonfinal,latini,latfinal):
     [j["latitude"], j["longitude"]], popup="Datetime : " + j["datetime"]).add_to(m)
     
     
-    m.save("index.html")
+    m.save("file:///C:/Users/User/Reto3-G12-SEC07-5/App/index.html")
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento

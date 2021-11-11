@@ -42,7 +42,8 @@ def printMenu():
     print("2- Cargar avistamientos por ciudad insertada")
     print("3- Contar los avistamientos por duración")
     print("4- Contar los avistamientos por Hora/Minutos")
-
+    print("5- Contar los avistamientos en un rango de fechas")
+    print("6- Contar los avistamientos de una Zona Geográfica")
 catalog= controller.initCatalog()
 cont=controller.initCatalog()
 """
@@ -85,10 +86,10 @@ while True:
         print("Existen " + str(lt.getElement(resp,2)) + " avistamientos en la ciudad insertada")
         print("Los avistamientos mas recientes en la ciudad insertada : ")
         for i in lt.iterator(lt.getElement(resp,3)):
-            print("Fecha y hora :" + str(i["datetime"])+ " ciudad: " + str(i["city"]) + " país: " + str(i["country"]) + " duración:" + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
+            print("Fecha y hora: " + str(i["datetime"])+ " ciudad: " + str(i["city"]) + " país: " + str(i["country"]) + " duración:" + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
         print("Los avistamientos mas antiguos en la ciudad insertada : ")
         for i in lt.iterator(lt.getElement(resp,4)):
-            print("Fecha y hora :" + str(i["datetime"]) + " país: " + str(i["country"]) + " duración: " + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
+            print("Fecha y hora: " + str(i["datetime"]) + " país: " + str(i["country"]) + " duración: " + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
         
             
         #print("Hay " + str(variable1) + " avistamientos en la ciudad insertada")
@@ -134,24 +135,55 @@ while True:
         
 
         for i in lt.iterator(avistamientos1):
-            print("Fecha y hora :" + str(i["datetime"])+ " ciudad: " + str(i["city"]) + " país: " + str(i["country"]) + " duración:" + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
+            print("Fecha y hora: " + str(i["datetime"])+ " ciudad: " + str(i["city"]) + " país: " + str(i["country"]) + " duración:" + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
         print("Los avistamientos mas antiguos en la ciudad insertada : ")
         for i in lt.iterator(avistamientos2):
-            print("Fecha y hora :" + str(i["datetime"]) + " país: " + str(i["country"]) + " duración: " + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
+            print("Fecha y hora: " + str(i["datetime"]) + " país: " + str(i["country"]) + " duración: " + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
     elif int(inputs[0]) == 5:
-        print(controller.requerimiento_3(catalog))
+        resp= controller.requerimiento4(catalog)
+       
+        print("Hay " + str(lt.getElement(resp,2)) + " Fechas diferentes con avistamientos")
+        print("Los avistamientos mas recientes en el intervalo insertado ")
+        print("Fecha " + str(lt.getElement(resp,5)['key']) + " avistamientos " +str(lt.getElement(resp,5)['value']["size"]))
+
+        for i in lt.iterator(lt.getElement(resp,6)):
+            print("Fecha y hora: " + str(i["datetime"])+ " ciudad: " + str(i["city"]) + " país: " + str(i["country"]) + " duración:" + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
+        print("Los avistamientos mas antiguos en el intervalo insertado : ")
+        for i in lt.iterator(lt.getElement(resp,7)):
+            print("Fecha y hora: " + str(i["datetime"]) + " país: " + str(i["country"]) + " duración: " + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) )) 
         
+        
+
+        
+    
+
     elif int(inputs[0]) == 6:
         print("Hola")
-        print(cont["cityIndex"])
+        resp= controller.requerimiento5(catalog)
+        print("Hay una cantidad de " + str(lt.getElement(resp,1)) + " avistamientos en la zona geografica insertada")
+        print("Intervalos de los avistamientos mas recientes en la zona insertada")
+
+        for i in lt.iterator(lt.getElement(resp,2)):
+            print("Fecha y hora: " + str(i["datetime"])+ " ciudad: " + str(i["city"]) + " país: " + str(i["country"]) + " duración:" + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) + " latitud: " + str(i["latitude"]) + " longitud: " + str(i["longitude"]))) 
+        print("Los avistamientos mas antiguos en el intervalo insertado : ")
+        for i in lt.iterator(lt.getElement(resp,3)):
+            print("Fecha y hora: " + str(i["datetime"]) + " país: " + str(i["country"]) + " duración: " + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) + " latitud: " + str(i["latitude"]) + " longitud: " + str(i["longitude"])))
+        
+        
 
     elif int(inputs[0]) == 7:
         print("Hola")
-        print(controller.requerimiento5(catalog))
-
-    elif int(inputs[0]) == 8:
-        print("Hola")
-        print(controller.bono(catalog))
+        resp= controller.requerimiento5(catalog)
+        print("Hay una cantidad de " + str(lt.getElement(resp,1)) + " avistamientos en la zona geografica insertada")
+        
+        print("Los avistamientos mas recientes en la zona insertada son")
+        for i in lt.iterator(lt.getElement(resp,2)):
+            print("Fecha y hora: " + str(i["datetime"])+ " ciudad: " + str(i["city"]) + " país: " + str(i["country"]) + " duración:" + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) + " latitud: " + str(i["latitude"]) + " longitud: " + str(i["longitude"]))) 
+        print("Los avistamientos mas antiguos en el intervalo insertado : ")
+        for i in lt.iterator(lt.getElement(resp,3)):
+            print("Fecha y hora: " + str(i["datetime"]) + " país: " + str(i["country"]) + " duración: " + str(i["duration (seconds)"] + " forma: " + str(i["shape"]) + " latitud: " + str(i["latitude"]) + " longitud: " + str(i["longitude"])))
+        
+        controller.bono(catalog)
 
     else:
         sys.exit(0)
